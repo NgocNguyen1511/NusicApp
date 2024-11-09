@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/pages/pages.dart';
+import 'package:music_app/screens/counter_screen.dart';
 import 'package:music_app/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -15,10 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: LoginScreen(),
+    return ChangeNotifierProvider(
+      create: (context) => CounterProvider(),
+      child: MaterialApp(
+        home: Scaffold(
+          body: Pages2(),
+        ),
       ),
     );
   }

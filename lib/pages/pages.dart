@@ -5,48 +5,56 @@ import '../screens/home_screen.dart';
 import '../screens/library_screen.dart';
 import '../screens/search_screen.dart';
 
-class Pages extends StatefulWidget {
-  const Pages({super.key});
+class Pages2 extends StatefulWidget {
+  const Pages2({super.key});
 
   @override
-  State<Pages> createState() => _PagesState();
+  State<Pages2> createState() => _Pages2State();
 }
 
-class _PagesState extends State<Pages> {
-  int selectedIndex = 0;
+class _Pages2State extends State<Pages2> {
+  int _selectedIndex = 0;
+
+  final PageController controller = PageController();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: [
-          HomeScreen(),
-          SearchScreen(),
-          LibraryScreen(),
-        ][selectedIndex],
+        body: PageView(
+          controller: controller,
+          children: <Widget>[
+            HomeScreen(),
+            SearchScreen(),
+            LibraryScreen(),
+          ],
+        ),
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             MiniPlayer(),
-            NavigationBar(
-              selectedIndex: selectedIndex,
-              destinations: [
-                NavigationDestination(
+            BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  label: 'home',
+                  label: 'Home',
                 ),
-                NavigationDestination(
+                BottomNavigationBarItem(
                   icon: Icon(Icons.search),
-                  label: 'search',
+                  label: 'Search',
                 ),
-                NavigationDestination(
-                  icon: Icon(Icons.my_library_music),
-                  label: 'library',
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.library_music),
+                  label: 'Library',
                 ),
               ],
-              onDestinationSelected: (value) {
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.black,
+              onTap: (index) {
                 setState(() {
-                  selectedIndex = value;
+                  _selectedIndex = index;
+                  controller.jumpToPage(index);
                 });
               },
             ),
